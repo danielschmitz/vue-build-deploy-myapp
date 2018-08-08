@@ -31,12 +31,20 @@
 </template>
 
 <script>
+import http from "@/services/http";
+
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
     msg: String
+  },
+  mounted() {
+    console.log(process.env.VUE_APP_ROOT_API);
+    http
+      .get("/categories")
+      .then(result => console.log(result), error => console.log(error));
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
