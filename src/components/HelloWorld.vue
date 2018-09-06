@@ -1,5 +1,6 @@
 <template>
   <div>
+    <span v-if="!isLogged">
     <form>
       <input type="email" name="email" id="email" v-model="email" placeholder="Email" size="30">
       <br/> <br/>
@@ -7,11 +8,12 @@
       <br/> <br/>
       <button type="button" @click="tryLogin()">Login</button>
     </form>
+    </span>
+    <span v-else>Hello user!  <button type="button" @click="logout()">Logout</button> </span>
   </div>
 </template>
 
 <script>
-import login from '@/services/login';
 export default {
   name: 'HelloWorld',
   props: {
@@ -23,15 +25,17 @@ export default {
       password: ''
     };
   },
+  computed: {
+    isLogged() {
+      return this.$store.getters.isLogged;
+    }
+  },
   methods: {
-    tryLogin() {  
-      //console.log('try login with', this.email, this.password);
-      console.log(process.env.VUE_APP_ROOT_API);
-      login.tryLogin(this.email, this.password).then( result => {
-        console.log('result', result);
-      }, error => {
-        console.log('error',error);
-      })
+    tryLogin() {
+      this.$store.dispatch('tryLogin', {email: this.email, password: this.password});
+    },
+    logout() {
+      this.$store.dispatch('logout');
     }
   }
 };
