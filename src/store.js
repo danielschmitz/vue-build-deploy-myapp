@@ -7,11 +7,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    token: ''
+    token: '' || localStorage.getItem('token')
   },
   mutations: {
     setToken(state, token) {
       state.token = token;
+      localStorage.setItem('token', token);
     }
   },
   actions: {

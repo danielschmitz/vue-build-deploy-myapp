@@ -12,6 +12,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/foo',
+      name: 'foo',
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

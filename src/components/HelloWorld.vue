@@ -12,7 +12,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn flat big color="primary" @click="tryLogin()">Login</v-btn>
+        <v-btn flat big color="primary" @click="tryLogin()" :disabled="!valid">Login</v-btn>
       </v-card-actions>
     </v-card>
 
