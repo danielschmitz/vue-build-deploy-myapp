@@ -11,7 +11,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!store.getters.isLogged) {
       next({
-        path: '/login',
+        path: '/',
         query: { redirect: to.fullPath },
       });
     } else {

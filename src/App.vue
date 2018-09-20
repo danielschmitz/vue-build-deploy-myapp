@@ -83,7 +83,12 @@ export default {
         icon: 'home',
         title: 'Home',
         to: '/'
-      }],
+      },
+    {
+      icon: 'category',
+        title: 'Categories',
+        to: '/categories'
+    }],
       miniVariant: false,
       right: true,
       rightDrawer: false,
