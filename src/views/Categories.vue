@@ -32,8 +32,8 @@
 
           <v-card-text>
             <v-form v-model="valid">
-              <v-text-field type="text" v-model="category.name" label="Name" required></v-text-field>
-              <v-text-field type="text" v-model="category.description" label="Description" required></v-text-field>
+              <v-text-field type="text" v-model="category.name" :rules="nameRules" label="Name" required></v-text-field>
+              <v-text-field type="text" v-model="category.description" :rules="descRules" label="Description" required></v-text-field>
             </v-form>
           </v-card-text>
 
@@ -41,7 +41,7 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" flat @click="onSaveCategoryClick()">
+            <v-btn color="primary" flat @click="onSaveCategoryClick()" :disabled="!valid">
               Save
             </v-btn>
           </v-card-actions>
@@ -62,7 +62,9 @@
         dialog: false,
         valid: true,
         category: {},
-        categories: []
+        categories: [],
+        nameRules: [v => !!v || 'Name is required'],
+        descRules: [v => !!v || 'Description is required']
       };
     },
     mounted() {
