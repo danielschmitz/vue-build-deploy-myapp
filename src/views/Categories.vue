@@ -23,6 +23,32 @@
       </v-card-actions>
     </v-card>
 
+    <div class="text-xs-center">
+      <v-dialog v-model="dialog" width="500">
+        <v-card>
+          <v-card-title class="headline grey lighten-2" primary-title>
+            Category: &nbsp; <b>{{category.name}}</b>
+          </v-card-title>
+
+          <v-card-text>
+            <v-form v-model="valid">
+              <v-text-field type="text" v-model="category.name" label="Name" required></v-text-field>
+              <v-text-field type="text" v-model="category.description" label="Description" required></v-text-field>
+            </v-form>
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" flat @click="onSaveCategoryClick()">
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
+
   </v-container>
 </template>
 
@@ -33,18 +59,35 @@
     name: 'Categories',
     data() {
       return {
+        dialog: false,
+        valid: true,
+        category: {},
         categories: []
       };
     },
     mounted() {
       console.log('Categories Mounted');
-      category.getAll().then(r => {
-        this.categories = r.data;
-      })
+      this.getAll();
     },
     methods: {
+      getAll() {
+        category.getAll().then(r => {
+          this.categories = r.data;
+        })
+      },
       onItemClick(item) {
-        console.log(item);
+        this.category = {
+          id: item.id,
+          name: item.name,
+          description: item.description
+        }
+        this.dialog = true;
+      },
+      onSaveCategoryClick() {
+        category.save(this.category).then(r => {
+          this.dialog = false
+          this.getAll();
+        })
       }
     }
   };
