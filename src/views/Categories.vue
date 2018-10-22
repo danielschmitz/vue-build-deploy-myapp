@@ -5,6 +5,12 @@
       <v-card-title primary-title>
         <h2>Categories</h2>
       </v-card-title>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" flat @click="onNewItemClick()">
+          New
+        </v-btn>
+      </v-card-actions>
       <v-card-text>
         <v-list two-line>
           <template v-for="(item, index) in categories">
@@ -40,6 +46,9 @@
           <v-divider></v-divider>
 
           <v-card-actions>
+            <v-btn color="warning" flat @click="onDeleteCategoryClick()" v-if="category.id!=null">
+              Delete
+            </v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" flat @click="onSaveCategoryClick()" :disabled="!valid">
               Save
@@ -89,6 +98,20 @@
         category.save(this.category).then(r => {
           this.dialog = false
           this.getAll();
+        })
+      },
+      onNewItemClick() {
+        this.category = {}
+        this.dialog = true;
+      },
+      onDeleteCategoryClick() {
+        this.$confirm('Do you really want to delete?').then(res => {
+          if (res) {
+            category.delete(this.category.id).then(r => {
+              this.dialog = false
+              this.getAll();
+            })
+          }
         })
       }
     }

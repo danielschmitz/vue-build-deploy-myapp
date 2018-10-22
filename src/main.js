@@ -4,8 +4,11 @@ import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import VuetifyConfirm from 'vuetify-confirm'
 
 Vue.config.productionTip = false
+
+Vue.use(VuetifyConfirm)
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
