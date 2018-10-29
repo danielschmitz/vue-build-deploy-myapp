@@ -5,13 +5,19 @@
             <v-card-title primary-title>
                 <h2>Customers</h2>
             </v-card-title>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" flat>
-                    New
-                </v-btn>
-            </v-card-actions>
-           
+
+            <v-card-text>
+
+                <v-data-table :headers="headers" :items="customers" :pagination.sync="pagination" :total-items="total"
+                    :loading="loading" class="elevation-1">
+                    <template slot="items" slot-scope="props">
+                        <td>{{ props.item.companyName }}</td>
+                        <td>{{ props.item.contactName }}</td>
+                        <td>{{ props.item.contactTitle }}</td>
+                    </template>
+                </v-data-table>
+
+            </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
             </v-card-actions>
@@ -28,32 +34,36 @@
             return {
                 customers: [],
                 total: 0,
-                page_length: 10,
-                page: 1
+                pagination: {},
+                loading: false,
+                headers: [
+                    { text: 'Company Name', value: 'companyName', sortable: false, },
+                    { text: 'Contact Name', value: 'contactName', sortable: false, },
+                    { text: 'Contact Title', value: 'contactTitle', sortable: false, },
+                ]
             }
         },
         mounted() {
             console.log('Customers Mounted');
-            this.getAll(1); //on load, get All from page 1
+        },
+        watch: {
+            pagination: {
+                handler() {
+                    const { page, rowsPerPage } = this.pagination
+                    let start = (page-1) * rowsPerPage
+                    let end = page * rowsPerPage
+                    this.loading= true
+                    customer.getByRange(start, end).then(r => {
+                        this.loading = false
+                        this.total = parseInt(r.headers['x-total-count'])
+                        this.customers = r.data
+                    })
+                },
+                deep: true
+            }
         },
         methods: {
-            getAll(page) {
-                page--
-                let start = page * this.page_length
-                let end = (page * this.page_length) + this.page_length
-                customer.getByRange(start, end).then(r => {
-                    this.total = r.headers['x-total-count']
-                    this.customers = r.data
-                })
-            },
-            onPageChange() {
-                this.getAll(this.page)
-            }
-        },
-        computed: {
-            pagination_length: function () {
-                return Math.round(this.total / this.page_length)
-            }
+            
         }
     }
 </script>
