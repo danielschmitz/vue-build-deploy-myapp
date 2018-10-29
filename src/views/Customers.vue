@@ -5,9 +5,8 @@
             <v-card-title primary-title>
                 <h2>Customers</h2>
             </v-card-title>
-
             <v-card-text>
-
+                <v-text-field type="text" v-model="search" append-icon="search" label="Search" @click:append="onSearchClick"></v-text-field>
                 <v-data-table :headers="headers" :items="customers" :pagination.sync="pagination" :total-items="total"
                     :loading="loading" class="elevation-1">
                     <template slot="items" slot-scope="props">
@@ -34,6 +33,7 @@
             return {
                 customers: [],
                 total: 0,
+                search: '',
                 pagination: {},
                 loading: false,
                 headers: [
@@ -49,21 +49,26 @@
         watch: {
             pagination: {
                 handler() {
-                    const { page, rowsPerPage } = this.pagination
-                    let start = (page-1) * rowsPerPage
-                    let end = page * rowsPerPage
-                    this.loading= true
-                    customer.getByRange(start, end).then(r => {
-                        this.loading = false
-                        this.total = parseInt(r.headers['x-total-count'])
-                        this.customers = r.data
-                    })
+                    this.getCustomers()
                 },
                 deep: true
             }
         },
         methods: {
-            
+            getCustomers() {
+                const { page, rowsPerPage } = this.pagination
+                let start = (page - 1) * rowsPerPage
+                let end = page * rowsPerPage
+                this.loading = true
+                customer.getByRange(start, end, this.search).then(r => {
+                    this.loading = false
+                    this.total = parseInt(r.headers['x-total-count'])
+                    this.customers = r.data
+                })
+            },
+            onSearchClick() {
+                this.getCustomers()
+            }
         }
     }
 </script>
