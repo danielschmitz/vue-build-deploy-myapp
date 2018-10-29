@@ -1,21 +1,9 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      persistent
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      v-model="drawer"
-      enable-resize-watcher
-      fixed
-      app
-    >
+    <v-navigation-drawer persistent :mini-variant="miniVariant" :clipped="clipped" v-model="drawer"
+      enable-resize-watcher fixed app>
       <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-        >
+        <v-list-tile value="true" v-for="(item, i) in items" :key="i" :to="item.to">
           <v-list-tile-action>
             <v-icon v-html="item.icon"></v-icon>
           </v-list-tile-action>
@@ -25,10 +13,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar
-      app
-      :clipped-left="clipped"
-    >
+    <v-toolbar app :clipped-left="clipped">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
@@ -46,15 +31,9 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
-    <v-navigation-drawer
-      temporary
-      :right="right"
-      v-model="rightDrawer"
-      fixed
-      app
-    >
+    <v-navigation-drawer temporary :right="right" v-model="rightDrawer" fixed app>
       <v-list>
         <v-list-tile @click="right = !right">
           <v-list-tile-action>
@@ -72,28 +51,32 @@
 
 <script>
 
-export default {
-  name: 'App',
-  data () {
-    return {
-      clipped: false,
-      drawer: true,
-      fixed: false,
-      items: [{
-        icon: 'home',
-        title: 'Home',
-        to: '/'
-      },
-    {
-      icon: 'category',
-        title: 'Categories',
-        to: '/categories'
-    }],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+  export default {
+    name: 'App',
+    data() {
+      return {
+        clipped: false,
+        drawer: true,
+        fixed: false,
+        items: [{
+          icon: 'home',
+          title: 'Home',
+          to: '/'
+        },
+        {
+          icon: 'category',
+          title: 'Categories',
+          to: '/categories'
+        }, {
+          icon: 'people',
+          title: 'Customers',
+          to: '/customers'
+        }],
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'Vuetify.js'
+      }
     }
   }
-}
 </script>
