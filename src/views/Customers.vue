@@ -11,11 +11,7 @@
                     New
                 </v-btn>
             </v-card-actions>
-            <v-card-text>
-                <div class="text-xs-center">
-                    <v-pagination v-model="page" :length="pagination_length" @input="onPageChange()"></v-pagination>
-                </div>  
-            </v-card-text>
+           
             <v-card-actions>
                 <v-spacer></v-spacer>
             </v-card-actions>
