@@ -12,7 +12,9 @@
                 </v-btn>
             </v-card-actions>
             <v-card-text>
-                text
+                <div class="text-xs-center">
+                    <v-pagination v-model="page" :length="pagination_length" @input="onPageChange()"></v-pagination>
+                </div>  
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -30,7 +32,8 @@
             return {
                 customers: [],
                 total: 0,
-                page_length: 10
+                page_length: 10,
+                page: 1
             }
         },
         mounted() {
@@ -41,11 +44,19 @@
             getAll(page) {
                 page--
                 let start = page * this.page_length
-                let end = (page * this.page_length) + this.page_length 
-                customer.getByRange(start,end).then( r => {
+                let end = (page * this.page_length) + this.page_length
+                customer.getByRange(start, end).then(r => {
                     this.total = r.headers['x-total-count']
                     this.customers = r.data
                 })
+            },
+            onPageChange() {
+                this.getAll(this.page)
+            }
+        },
+        computed: {
+            pagination_length: function () {
+                return Math.round(this.total / this.page_length)
             }
         }
     }
