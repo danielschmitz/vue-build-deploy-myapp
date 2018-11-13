@@ -62,58 +62,64 @@
 </template>
 
 <script>
-  import category from '@/services/category';
+import category from '../services/category'
 
-  export default {
-    name: 'Categories',
-    data() {
-      return {
-        dialog: false,
-        valid: true,
-        category: {},
-        categories: [],
-        nameRules: [v => !!v || 'Name is required'],
-        descRules: [v => !!v || 'Description is required']
-      };
+export default {
+  name: 'Categories',
+  data () {
+    return {
+      dialog: false,
+      valid: true,
+      /** @type {Category} */
+      category: {},
+      /** @type {Category[]} */
+      categories: [],
+      nameRules: [v => !!v || 'Name is required'],
+      descRules: [v => !!v || 'Description is required']
+    };
+  },
+  mounted () {
+    console.log('Categories Mounted');
+    this.getAll();
+  },
+  methods: {
+
+    getAll () {
+      category.getAll().then(r => {
+        this.categories = r.data;
+      })
     },
-    mounted() {
-      console.log('Categories Mounted');
-      this.getAll();
-    },
-    methods: {
-      getAll() {
-        category.getAll().then(r => {
-          this.categories = r.data;
-        })
-      },
-      onItemClick(item) {
-        this.category = {
-          id: item.id,
-          name: item.name,
-          description: item.description
-        }
-        this.dialog = true;
-      },
-      onSaveCategoryClick() {
-        category.save(this.category).then(r => {
-          this.dialog = false
-          this.getAll();
-        })
-      },
-      onNewItemClick() {
-        this.category = {}
-        this.dialog = true;
-      },
-      onDeleteCategoryClick() {
-        this.$confirm('Do you really want to delete?').then(res => {
-          if (res) {
-            category.delete(this.category.id).then(r => {
-              this.dialog = false
-              this.getAll();
-            })
-          }
-        })
+    onItemClick (item) {
+
+
+
+      this.category = {
+        id: item.id,
+        name: item.name,
+        description: item.description
       }
+      this.dialog = true;
+    },
+    onSaveCategoryClick () {
+      category.save(this.category).then(r => {
+        this.dialog = false
+        this.getAll();
+      })
+    },
+    onNewItemClick () {
+      this.category = {}
+      this.dialog = true;
+    },
+    onDeleteCategoryClick () {
+      this.$confirm('Do you really want to delete?').then(res => {
+        if (res) {
+          category.delete(this.category.id).then(r => {
+            this.dialog = false
+            this.getAll();
+          })
+        }
+      })
     }
-  };
+  }
+};
 </script>
