@@ -24,14 +24,25 @@
         </v-card>
 
         <div class="text-xs-center">
-            <v-dialog v-model="dialog" width="500">
+            <v-dialog v-model="dialog">
                 <v-card>
                     <v-card-title class="headline grey lighten-2" primary-title>
                         Customer
                     </v-card-title>
 
                     <v-card-text>
-                        form...
+                        <v-form v-model="valid">
+                            <v-container>
+                                <v-layout row wrap>
+                                    <v-flex xs12 md2>
+                                        <v-text-field type="text" v-model="customer.id" label="ID" required></v-text-field>
+                                    </v-flex>
+                                    <v-flex xs12 md10>
+                                        <v-text-field type="text" v-model="customer.contactName" label="Contact Name" required></v-text-field>
+                                    </v-flex>
+                                </v-layout>
+                            </v-container>
+                        </v-form>
                     </v-card-text>
 
                     <v-divider></v-divider>
@@ -68,7 +79,9 @@ export default {
                 { text: 'Contact Name', value: 'contactName', sortable: false, },
                 { text: 'Contact Title', value: 'contactTitle', sortable: false, },
             ],
-            dialog: false
+            dialog: false,
+            valid: true,
+            customer: {}
         }
     },
     mounted () {
