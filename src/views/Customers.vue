@@ -4,6 +4,8 @@
         <v-card class="card--flex-toolbar">
             <v-card-title primary-title>
                 <h2>Customers</h2>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" flat @click="onNewItemClick()">New</v-btn>
             </v-card-title>
             <v-card-text>
                 <v-text-field type="text" v-model="search" append-icon="search" label="Search" @click:append="onSearchClick"></v-text-field>
@@ -20,6 +22,32 @@
                 <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
+
+        <div class="text-xs-center">
+            <v-dialog v-model="dialog" width="500">
+                <v-card>
+                    <v-card-title class="headline grey lighten-2" primary-title>
+                        Customer
+                    </v-card-title>
+
+                    <v-card-text>
+                        form...
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-btn color="warning" flat>
+                            Delete
+                        </v-btn>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" flat>
+                            Save
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </div>
 
     </v-container>
 </template>
@@ -39,7 +67,8 @@ export default {
                 { text: 'Company Name', value: 'companyName', sortable: false, },
                 { text: 'Contact Name', value: 'contactName', sortable: false, },
                 { text: 'Contact Title', value: 'contactTitle', sortable: false, },
-            ]
+            ],
+            dialog: false
         }
     },
     mounted () {
@@ -67,6 +96,9 @@ export default {
         },
         onSearchClick () {
             this.getCustomers()
+        },
+        onNewItemClick () {
+            this.dialog = true;
         }
     }
 }
