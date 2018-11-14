@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer persistent :mini-variant="miniVariant" :clipped="clipped" v-model="drawer"
-      enable-resize-watcher fixed app>
+    <v-navigation-drawer persistent :mini-variant="miniVariant" :clipped="clipped" v-model="drawer" enable-resize-watcher fixed app>
       <v-list>
         <v-list-tile value="true" v-for="(item, i) in items" :key="i" :to="item.to">
           <v-list-tile-action>
@@ -51,32 +50,38 @@
 
 <script>
 
-  export default {
-    name: 'App',
-    data() {
-      return {
-        clipped: false,
-        drawer: true,
-        fixed: false,
-        items: [{
-          icon: 'home',
-          title: 'Home',
-          to: '/'
-        },
-        {
-          icon: 'category',
-          title: 'Categories',
-          to: '/categories'
-        }, {
-          icon: 'people',
-          title: 'Customers',
-          to: '/customers'
-        }],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: 'Vuetify.js'
-      }
+export default {
+  name: 'App',
+  data () {
+    return {
+      clipped: false,
+      drawer: true,
+      fixed: false,
+      items: [{
+        icon: 'home',
+        title: 'Home',
+        to: '/'
+      },
+      {
+        icon: 'category',
+        title: 'Categories',
+        to: '/categories'
+      }, {
+        icon: 'people',
+        title: 'Customers',
+        to: '/customers'
+      }],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: 'Vuetify.js'
     }
   }
+}
 </script>
+
+<style>
+.container h3 {
+  margin-left: -20px;
+}
+</style>
