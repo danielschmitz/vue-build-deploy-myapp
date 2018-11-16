@@ -113,7 +113,7 @@
       onSaveCategoryClick() {
         category.save(this.category).then(r => {
           this.dialog = false
-          this.getAll();
+          this.getAll()
         })
       },
       onNewItemClick() {
