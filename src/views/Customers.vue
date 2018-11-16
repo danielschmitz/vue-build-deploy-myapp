@@ -38,10 +38,10 @@
 
                 <v-layout row wrap>
                   <v-flex xs12 md2>
-                    <v-text-field type="text" v-model="customer.id" label="ID" required></v-text-field>
+                    <v-text-field type="text" v-model="customer.id" label="ID" :rules="rules.id" required></v-text-field>
                   </v-flex>
                   <v-flex xs12 md10>
-                    <v-text-field type="text" v-model="customer.contactName" label="Contact Name" required></v-text-field>
+                    <v-text-field type="text" v-model="customer.contactName" :rules="rules.name" label="Contact Name" required></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row wrap>
@@ -89,11 +89,8 @@
           <v-divider></v-divider>
 
           <v-card-actions>
-            <v-btn color="warning" flat>
-              Delete
-            </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" flat>
+            <v-btn color="primary" flat  :disabled="!valid">
               Save
             </v-btn>
           </v-card-actions>
@@ -124,7 +121,11 @@ export default {
       valid: true,
       customer: {
         address: {}
-      }
+      },
+      rules:{
+        id: [v => !!v || 'ID is required'],
+        name: [v => !!v || 'Contact Name is required']
+      },
     }
   },
   mounted () {
