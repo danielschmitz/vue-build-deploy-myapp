@@ -50,8 +50,7 @@
                       type="text"
                       v-model="customer.id"
                       label="ID"
-                      :rules="rules.id"
-                      required
+                      :disabled="true"
                     ></v-text-field>
                   </v-flex>
                   <v-flex xs12 md10>
@@ -146,8 +145,7 @@
             <v-btn
               color="primary"
               flat
-              :disabled="!valid"
-              @cilck="onSaveClick()"
+              @click="onSaveClick()"
             >
               Save
             </v-btn>
@@ -180,7 +178,6 @@
           address: {}
         },
         rules: {
-          id: [v => !!v || 'ID is required'],
           name: [v => !!v || 'Contact Name is required']
         }
       };
@@ -215,7 +212,7 @@
         this.dialog = true;
       },
       onSaveClick() {
-        customer.save(this.customer).then( r => {
+        customer.save(this.customer).then( result => {
           this.dialog = false
           this.getCustomers()
         })
