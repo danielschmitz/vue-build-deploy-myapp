@@ -7,29 +7,20 @@
         <v-btn color="primary" flat @click="onNewItemClick()">New</v-btn>
       </v-card-title>
       <v-card-text>
-        <v-text-field
-          type="text"
-          v-model="search"
-          append-icon="search"
-          label="Search"
-          @click:append="onSearchClick"
-        ></v-text-field>
-        <v-data-table
-          :headers="headers"
-          :items="customers"
-          :pagination.sync="pagination"
-          :total-items="total"
-          :loading="loading"
-          class="elevation-1"
-        >
+        <v-text-field type="text" v-model="search" append-icon="search" label="Search" @click:append="onSearchClick"></v-text-field>
+        <v-data-table :headers="headers" :items="customers" :pagination.sync="pagination" :total-items="total" :loading="loading" class="elevation-1">
           <template slot="items" slot-scope="props">
-            <td>{{ props.item.companyName }}</td>
-            <td>{{ props.item.contactName }}</td>
-            <td>{{ props.item.contactTitle }}</td>
+            <tr @click="onItemClick(props.item)">
+              <td>{{ props.item.companyName }}</td>
+              <td>{{ props.item.contactName }}</td>
+              <td>{{ props.item.contactTitle }}</td>
+            </tr>
           </template>
         </v-data-table>
       </v-card-text>
-      <v-card-actions> <v-spacer></v-spacer> </v-card-actions>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+      </v-card-actions>
     </v-card>
 
     <div class="text-xs-center">
@@ -46,39 +37,18 @@
 
                 <v-layout row wrap>
                   <v-flex xs12 md2>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.id"
-                      label="ID"
-                      :disabled="true"
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.id" label="ID" :disabled="true"></v-text-field>
                   </v-flex>
                   <v-flex xs12 md10>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.contactName"
-                      :rules="rules.name"
-                      label="Contact Name"
-                      required
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.contactName" :rules="rules.name" label="Contact Name" required></v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row wrap>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.contactTitle"
-                      label="Contact Title"
-                      required
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.contactTitle" label="Contact Title" required></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.companyName"
-                      label="Company Name"
-                      required
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.companyName" label="Company Name" required></v-text-field>
                   </v-flex>
                 </v-layout>
 
@@ -86,52 +56,28 @@
 
                 <v-layout>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.address.street"
-                      label="Street"
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.address.street" label="Street"></v-text-field>
                   </v-flex>
                 </v-layout>
 
                 <v-layout row wrap>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.address.city"
-                      label="City"
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.address.city" label="City"></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.address.region"
-                      label="Region"
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.address.region" label="Region"></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.address.country"
-                      label="Country"
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.address.country" label="Country"></v-text-field>
                   </v-flex>
                 </v-layout>
 
                 <v-layout row wrap>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.address.postalCode"
-                      label="Postal Code"
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.address.postalCode" label="Postal Code"></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field
-                      type="text"
-                      v-model="customer.address.phone"
-                      label="Phone"
-                    ></v-text-field>
+                    <v-text-field type="text" v-model="customer.address.phone" label="Phone"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -141,13 +87,34 @@
           <v-divider></v-divider>
 
           <v-card-actions>
+            <v-btn flat color="red" @click="onDeleteClick()" v-if="customer.id!=null">
+              Delete
+            </v-btn>
             <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              flat
-              @click="onSaveClick()"
-            >
+            <v-btn color="primary" flat @click="onSaveClick()">
               Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="dialogConfirm" max-width="290">
+        <v-card>
+          <v-card-title class="headline">Please confirm</v-card-title>
+
+          <v-card-text>
+            Confirm delete {{customer.contactName}}?
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn flat="flat" @click="dialogConfirm = false">
+              No
+            </v-btn>
+
+            <v-btn color="red" flat="flat" @click="onDeleteClickConfirm()">
+              Yes
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -156,67 +123,85 @@
   </v-container>
 </template>
 <script>
-  import customer from '@/services/customer';
+import customer from '../services/customer';
 
-  export default {
-    name: 'Customers',
-    data() {
-      return {
-        customers: [],
-        total: 0,
-        search: '',
-        pagination: {},
-        loading: false,
-        headers: [
-          { text: 'Company Name', value: 'companyName', sortable: false },
-          { text: 'Contact Name', value: 'contactName', sortable: false },
-          { text: 'Contact Title', value: 'contactTitle', sortable: false }
-        ],
-        dialog: true,
-        valid: true,
-        customer: {
-          address: {}
-        },
-        rules: {
-          name: [v => !!v || 'Contact Name is required']
-        }
-      };
-    },
-    mounted() {
-      console.log('Customers Mounted');
-    },
-    watch: {
-      pagination: {
-        handler() {
-          this.getCustomers();
-        },
-        deep: true
-      }
-    },
-    methods: {
-      getCustomers() {
-        const { page, rowsPerPage } = this.pagination;
-        let start = (page - 1) * rowsPerPage;
-        let end = page * rowsPerPage;
-        this.loading = true;
-        customer.getByRange(start, end, this.search).then(r => {
-          this.loading = false;
-          this.total = parseInt(r.headers['x-total-count']);
-          this.customers = r.data;
-        });
+export default {
+  name: 'Customers',
+  data () {
+    return {
+      customers: [],
+      total: 0,
+      search: '',
+      pagination: {},
+      loading: false,
+      headers: [
+        { text: 'Company Name', value: 'companyName', sortable: false },
+        { text: 'Contact Name', value: 'contactName', sortable: false },
+        { text: 'Contact Title', value: 'contactTitle', sortable: false }
+      ],
+      dialog: false,
+      dialogConfirm: false,
+      valid: true,
+      customer: {
+        address: {}
       },
-      onSearchClick() {
+      rules: {
+        name: [v => !!v || 'Contact Name is required']
+      }
+    };
+  },
+  mounted () {
+    console.log('Customers Mounted');
+  },
+  watch: {
+    pagination: {
+      handler () {
         this.getCustomers();
       },
-      onNewItemClick() {
-        this.dialog = true;
-      },
-      onSaveClick() {
-        customer.save(this.customer).then( result => {
-          this.dialog = false
-          this.getCustomers()
-        })
-      }
+      deep: true
     }
-  };
+  },
+  methods: {
+    getCustomers () {
+      const { page, rowsPerPage } = this.pagination;
+      let start = (page - 1) * rowsPerPage;
+      let end = page * rowsPerPage;
+      this.loading = true;
+      customer.getByRange(start, end, this.search).then(r => {
+        this.loading = false;
+        this.total = parseInt(r.headers['x-total-count']);
+        this.customers = r.data;
+      });
+    },
+    onSearchClick () {
+      this.getCustomers();
+    },
+    onNewItemClick () {
+      this.customer = {
+        address: {}
+      }
+      this.dialog = true;
+    },
+    onSaveClick () {
+      customer.save(this.customer).then(result => {
+        this.dialog = false
+        this.getCustomers()
+      })
+    },
+    onItemClick (item) {
+      this.customer = item
+      this.dialog = true
+    },
+    onDeleteClick () {
+      this.dialogConfirm = true;
+    },
+    onDeleteClickConfirm () {
+      customer.delete(this.customer.id).then( () => {
+        this.dialogConfirm = false
+        this.dialog = false
+        this.getCustomers()
+      })
+    }
+  }
+};
 </script>
