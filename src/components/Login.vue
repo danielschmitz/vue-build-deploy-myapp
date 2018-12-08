@@ -59,6 +59,9 @@
         this.$store.dispatch('tryLogin', {
           email: this.email,
           password: this.password
+        }).catch( error => {
+          console.log('error no login: ', error)
+          alert('Wrong login');
         });
       },
       logout() {

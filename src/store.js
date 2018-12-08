@@ -18,12 +18,9 @@ export default new Vuex.Store({
   actions: {
     tryLogin({ commit }, payload) {
       console.log('tryLogin with ', payload.email, 'and', payload.password);
-      login.tryLogin(payload.email, payload.password).then(
+      return login.tryLogin(payload.email, payload.password).then(
         result => {
           commit('setToken', result.data.token);
-        },
-        error => {
-          console.log('error', error);
         }
       );
     },

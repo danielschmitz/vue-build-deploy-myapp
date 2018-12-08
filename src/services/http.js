@@ -24,6 +24,7 @@ http.interceptors.response.use(
   error => {
     if (error.response !== undefined) {
       if (error.response.status === 401) {
+        store.dispatch('logout')
         router.push('/login');
       }
     }
