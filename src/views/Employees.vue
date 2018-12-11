@@ -183,6 +183,12 @@
                     ></v-text-field>
                   </v-flex>
                 </v-layout>
+                <h3>Notes</h3>
+                <v-textarea
+                  name="notes"
+                  auto-grow
+                  v-model="employee.notes"
+                ></v-textarea>
               </v-container>
             </v-form>
           </v-card-text>
