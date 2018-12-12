@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Categories from './views/Categories.vue'
 import Customers from './views/Customers.vue'
 import Employees from './views/Employees.vue'
+import Products from './views/Products.vue'
 
 
 Vue.use(Router)
@@ -36,6 +37,12 @@ export default new Router({
       path: '/employees',
       name: 'employees',
       component: Employees,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: Products,
       meta: { requiresAuth: true }
     },
     {

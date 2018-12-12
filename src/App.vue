@@ -92,7 +92,7 @@ export default {
   data () {
     return {
       clipped: false,
-      drawer: true,
+      drawer: false,
       fixed: false,
       items: [{
         icon: 'home',
@@ -113,7 +113,13 @@ export default {
         icon: 'work',
         title: 'Employees',
         to: '/employees'
-      },],
+      },
+      {
+        icon: 'beach_access',
+        title: 'Products',
+        to: '/products'
+      },
+      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
