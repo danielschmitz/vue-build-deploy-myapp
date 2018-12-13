@@ -106,6 +106,12 @@
               </v-card>
             </v-flex>
           </v-data-iterator>
+          <div class="text-xs-center pt-2">
+            <v-pagination
+              v-model="pagination.page"
+              :length="total"
+            ></v-pagination>
+          </div>
         </v-container>
       </v-card-text>
       <v-card-actions>
