@@ -102,6 +102,16 @@
                     <v-list-tile-content class="align-end">{{ props.item.unitsInStock }}</v-list-tile-content>
                   </v-list-tile>
 
+                  <v-list-tile>
+                    <v-list-tile-content>Actions</v-list-tile-content>
+                    <v-list-tile-action>
+                      <v-icon @click="onClickEditProduct(props.item)">edit</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-action>
+                      <v-icon @click="onClickDeleteProduct(props.item)">delete</v-icon>
+                    </v-list-tile-action>
+                  </v-list-tile>
+
                 </v-list>
               </v-card>
             </v-flex>
@@ -158,11 +168,15 @@ export default {
         this.products = r.data;
       });
     },
+
     onSearchClick () {
       this.getProducts();
     },
     onNewItemClick () {
       //TODO
+    },
+    onClickEditProduct (item) {
+      this.$router.push(`/editproduct/${item.id}`)
     }
   }
 };

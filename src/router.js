@@ -5,6 +5,7 @@ import Categories from './views/Categories.vue'
 import Customers from './views/Customers.vue'
 import Employees from './views/Employees.vue'
 import Products from './views/Products.vue'
+import EditProduct from './views/EditProduct.vue'
 
 
 Vue.use(Router)
@@ -43,6 +44,12 @@ export default new Router({
       path: '/products',
       name: 'products',
       component: Products,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/editproduct/:id',
+      name: 'editproduct',
+      component: EditProduct,
       meta: { requiresAuth: true }
     },
     {
