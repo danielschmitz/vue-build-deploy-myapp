@@ -4,12 +4,32 @@
       <v-card-title primary-title>
         <h2>Customers</h2>
         <v-spacer></v-spacer>
-        <v-btn color="primary" flat @click="onNewItemClick()">New</v-btn>
+        <v-btn
+          color="primary"
+          flat
+          @click="onNewItemClick()"
+        >New</v-btn>
       </v-card-title>
       <v-card-text>
-        <v-text-field type="text" v-model="search" append-icon="search" label="Search" @click:append="onSearchClick"></v-text-field>
-        <v-data-table :headers="headers" :items="customers" :pagination.sync="pagination" :total-items="total" :loading="loading" class="elevation-1">
-          <template slot="items" slot-scope="props">
+        <v-text-field
+          type="text"
+          v-model="search"
+          append-icon="search"
+          label="Search"
+          @click:append="onSearchClick"
+        ></v-text-field>
+        <v-data-table
+          :headers="headers"
+          :items="customers"
+          :pagination.sync="pagination"
+          :total-items="total"
+          :loading="loading"
+          class="elevation-1"
+        >
+          <template
+            slot="items"
+            slot-scope="props"
+          >
             <tr @click="onItemClick(props.item)">
               <td>{{ props.item.companyName }}</td>
               <td>{{ props.item.contactName }}</td>
@@ -26,7 +46,10 @@
     <div class="text-xs-center">
       <v-dialog v-model="dialog">
         <v-card>
-          <v-card-title class="headline grey lighten-2" primary-title>
+          <v-card-title
+            class="headline grey lighten-2"
+            primary-title
+          >
             Customer
           </v-card-title>
 
@@ -35,20 +58,53 @@
               <v-container>
                 <h3>User info</h3>
 
-                <v-layout row wrap>
-                  <v-flex xs12 md2>
-                    <v-text-field type="text" v-model="customer.id" label="ID" :disabled="true"></v-text-field>
+                  <v-layout
+                  row
+                  wrap
+                >
+                  <v-flex
+                    xs12
+                    md2
+                  >
+                    <v-text-field
+                      type="text"
+                      v-model="customer.id"
+                      label="ID"
+                      :disabled="true"
+                    ></v-text-field>
                   </v-flex>
-                  <v-flex xs12 md10>
-                    <v-text-field type="text" v-model="customer.contactName" :rules="rules.name" label="Contact Name" required></v-text-field>
+                  <v-flex
+                    xs12
+                    md10
+                  >
+                    <v-text-field
+                      type="text"
+                      v-model="customer.contactName"
+                      :rules="rules.name"
+                      label="Contact Name"
+                      required
+                    ></v-text-field>
                   </v-flex>
                 </v-layout>
-                <v-layout row wrap>
+                <v-layout
+                  row
+                  wrap
+                >
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.contactTitle" label="Contact Title" required></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.contactTitle"
+                      label="Contact Title"
+                      required
+                    ></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.companyName" label="Company Name" required></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.companyName"
+                      label="Company Name"
+                      required
+                    ></v-text-field>
                   </v-flex>
                 </v-layout>
 
@@ -56,28 +112,58 @@
 
                 <v-layout>
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.address.street" label="Street"></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.address.street"
+                      label="Street"
+                    ></v-text-field>
                   </v-flex>
                 </v-layout>
 
-                <v-layout row wrap>
+                <v-layout
+                  row
+                  wrap
+                >
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.address.city" label="City"></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.address.city"
+                      label="City"
+                    ></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.address.region" label="Region"></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.address.region"
+                      label="Region"
+                    ></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.address.country" label="Country"></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.address.country"
+                      label="Country"
+                    ></v-text-field>
                   </v-flex>
                 </v-layout>
 
-                <v-layout row wrap>
+                <v-layout
+                  row
+                  wrap
+                >
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.address.postalCode" label="Postal Code"></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.address.postalCode"
+                      label="Postal Code"
+                    ></v-text-field>
                   </v-flex>
                   <v-flex>
-                    <v-text-field type="text" v-model="customer.address.phone" label="Phone"></v-text-field>
+                    <v-text-field
+                      type="text"
+                      v-model="customer.address.phone"
+                      label="Phone"
+                    ></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -87,18 +173,30 @@
           <v-divider></v-divider>
 
           <v-card-actions>
-            <v-btn flat color="red" @click="onDeleteClick()" v-if="customer.id!=null">
+            <v-btn
+              flat
+              color="red"
+              @click="onDeleteClick()"
+              v-if="customer.id!=null"
+            >
               Delete
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="primary" flat @click="onSaveClick()">
+            <v-btn
+              color="primary"
+              flat
+              @click="onSaveClick()"
+            >
               Save
             </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
-      <v-dialog v-model="dialogConfirm" max-width="290">
+      <v-dialog
+        v-model="dialogConfirm"
+        max-width="290"
+      >
         <v-card>
           <v-card-title class="headline">Please confirm</v-card-title>
 
@@ -109,11 +207,18 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn flat="flat" @click="dialogConfirm = false">
+            <v-btn
+              flat="flat"
+              @click="dialogConfirm = false"
+            >
               No
             </v-btn>
 
-            <v-btn color="red" flat="flat" @click="onDeleteClickConfirm()">
+            <v-btn
+              color="red"
+              flat="flat"
+              @click="onDeleteClickConfirm()"
+            >
               Yes
             </v-btn>
           </v-card-actions>
@@ -196,7 +301,7 @@ export default {
       this.dialogConfirm = true;
     },
     onDeleteClickConfirm () {
-      customer.delete(this.customer.id).then( () => {
+      customer.delete(this.customer.id).then(() => {
         this.dialogConfirm = false
         this.dialog = false
         this.getCustomers()
